@@ -14,17 +14,17 @@ def crea_ristorante():
         if not d.get(campo):
             return jsonify({"errore": f"Campo obbligatorio mancante: {campo}"}), 400
     nuovo_id = query(
-        """INSERT INTO ristoranti (id_utente, nome, descrizione, via, lat, lng, partita_iva, categoria)
-           VALUES (%s,%s,%s,%s,%s,%s,%s,%s)""",
+        """INSERT INTO ristoranti (id_utente, nome, descrizione, via, lat, lng, partita_iva, categoria, foto_profilo)
+           VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
         (request.utente_id, d["nome"], d.get("descrizione"), d["via"],
-         d["lat"], d["lng"], d.get("partita_iva"), d.get("categoria")),
+         d["lat"], d["lng"], d.get("partita_iva"), d.get("categoria"), d.get("foto_profilo")),
         commit=True
     )
     return jsonify({"messaggio": "Ristorante creato", "id": nuovo_id}), 201
 
 @ristoranti_bp.route("", methods=["GET"])
 def lista_ristoranti():
-    risultati = query("SELECT id, nome, descrizione, via, lat, lng, partita_iva, categoria FROM ristoranti")
+    risultati = query("SELECT id, nome, descrizione, via, lat, lng, partita_iva, categoria, foto_profilo FROM ristoranti")
     for r in risultati:
         r["lat"] = float(r["lat"]) if r["lat"] else None
         r["lng"] = float(r["lng"]) if r["lng"] else None
@@ -39,7 +39,7 @@ def ristoranti_vicini():
     except (KeyError, ValueError):
         return jsonify({"errore": "Parametri lat e lng obbligatori e numerici"}), 400
     sql = """
-        SELECT id, nome, descrizione, via, lat, lng, partita_iva, categoria,
+        SELECT id, nome, descrizione, via, lat, lng, partita_iva, categoria, foto_profilo,
             ROUND(6371 * 2 * ASIN(SQRT(
                 POWER(SIN(RADIANS(lat - %s) / 2), 2) +
                 COS(RADIANS(%s)) * COS(RADIANS(lat)) *
@@ -74,7 +74,7 @@ def update_ristorante(rid):
     if ristorante["id_utente"] != request.utente_id:
         return jsonify({"errore": "Non autorizzato"}), 403
     d = request.get_json(silent=True) or {}
-    campi = ["nome", "descrizione", "via", "lat", "lng", "partita_iva", "categoria"]
+    campi = ["nome", "descrizione", "via", "lat", "lng", "partita_iva", "categoria", "foto_profilo"]
     aggiornamenti = {k: v for k, v in d.items() if k in campi}
     if not aggiornamenti:
         return jsonify({"errore": "Nessun campo valido da aggiornare"}), 400
