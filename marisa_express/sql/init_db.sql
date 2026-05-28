@@ -4,9 +4,6 @@
 -- ============================================================
 
 CREATE DATABASE IF NOT EXISTS marisa_express_db
-  CHARACTER SET utf8mb4
-  COLLATE utf8mb4_unicode_ci;
-
 USE marisa_express_db;
 
 -- ------------------------------------------------------------
@@ -22,8 +19,8 @@ CREATE TABLE IF NOT EXISTS utenti (
     tipo            ENUM('utente','rider','ristoratore') NOT NULL DEFAULT 'utente',
     crediti         DECIMAL(10,2)   NOT NULL DEFAULT 0.00,
     foto_profilo    VARCHAR(255),
-    created_at      DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    cr eated_at      DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP
+)
 
 -- ------------------------------------------------------------
 -- RISTORANTI
@@ -34,17 +31,17 @@ CREATE TABLE IF NOT EXISTS ristoranti (
     id_utente       INT             NOT NULL,
     nome            VARCHAR(150)    NOT NULL,
     descrizione     VARCHAR(300),
-    via             VARCHAR(255),
-    lat             DECIMAL(10,7),
-    lng             DECIMAL(10,7),
-    foto_profilo    VARCHAR(255)    NULL,
-    partita_iva     VARCHAR(20),
+    via             VARCHAR(255)    NOT NULL,,
+    lat             DECIMAL(10,7)   NOT NULL,,
+    lng             DECIMAL(10,7)   NOT NULL,,
+    foto_profilo    VARCHAR(255),
+    partita_iva     VARCHAR(20)     NOT NULL,,
     categoria       VARCHAR(100),
     created_at      DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_ristoranti_utente
         FOREIGN KEY (id_utente) REFERENCES utenti(id)
         ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+)
 
 -- ------------------------------------------------------------
 -- MENU ITEMS
@@ -58,11 +55,11 @@ CREATE TABLE IF NOT EXISTS menu_items (
     prezzo          DECIMAL(8,2)    NOT NULL,
     foto            VARCHAR(255),
     categoria       VARCHAR(100),
-    disponibile     TINYINT(1)      NOT NULL DEFAULT 1,
+    disponibile     BOOLEAN      NOT NULL DEFAULT 1,
     CONSTRAINT fk_menu_ristorante
         FOREIGN KEY (id_ristorante) REFERENCES ristoranti(id)
         ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+)
 
 -- ------------------------------------------------------------
 -- ORDINI
@@ -83,9 +80,9 @@ CREATE TABLE IF NOT EXISTS ordini (
                             'rifiutato'
                         ) NOT NULL DEFAULT 'in_attesa',
     totale              DECIMAL(10,2)   NOT NULL,
-    indirizzo_consegna  VARCHAR(255),
-    lat_consegna        DECIMAL(10,7),
-    lng_consegna        DECIMAL(10,7),
+    indirizzo_consegna  VARCHAR(255)    NOT NULL,
+    lat_consegna        DECIMAL(10,7)   NOT NULL,
+    lng_consegna        DECIMAL(10,7)   NOT NULL,
     token_consegna      VARCHAR(10),
     created_at          DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_ordini_utente
@@ -95,7 +92,7 @@ CREATE TABLE IF NOT EXISTS ordini (
     CONSTRAINT fk_ordini_rider
         FOREIGN KEY (id_rider) REFERENCES utenti(id)
         ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+)
 
 -- ------------------------------------------------------------
 -- ORDINI ITEMS
@@ -112,7 +109,7 @@ CREATE TABLE IF NOT EXISTS ordini_items (
         ON DELETE CASCADE,
     CONSTRAINT fk_ordini_items_menu
         FOREIGN KEY (id_menu_item) REFERENCES menu_items(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+)
 
 -- ------------------------------------------------------------
 -- WALLET TRANSAZIONI
@@ -123,12 +120,12 @@ CREATE TABLE IF NOT EXISTS wallet_transazioni (
     id_utente           INT             NOT NULL,
     importo             DECIMAL(10,2)   NOT NULL,
     tipo                ENUM('ricarica','pagamento','rimborso') NOT NULL,
-    stripe_session_id   VARCHAR(255)    NULL,
+    stripe_session_id   VARCHAR(255),
     created_at          DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_wallet_utente
         FOREIGN KEY (id_utente) REFERENCES utenti(id)
         ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+)
 
 -- ------------------------------------------------------------
 -- RIDERS
@@ -137,21 +134,21 @@ CREATE TABLE IF NOT EXISTS wallet_transazioni (
 CREATE TABLE IF NOT EXISTS riders (
     id              INT             AUTO_INCREMENT PRIMARY KEY,
     id_utente       INT             NOT NULL UNIQUE,
-    nome            VARCHAR(30),
+    nome            VARCHAR(30)     NOT NULL,
     codice_fiscale  VARCHAR(16)     NOT NULL UNIQUE,
     veicolo         VARCHAR(100),
     targa           VARCHAR(20),
     foto_profilo    VARCHAR(255),
     telefono        VARCHAR(20),
-    zona            VARCHAR(100),
-    lat             DECIMAL(10,7),
-    lng             DECIMAL(10,7),
+    zona            VARCHAR(100)    NOT NULL,
+    lat             DECIMAL(10,7)   NOT NULL,
+    lng             DECIMAL(10,7)   NOT NULL,
     disponibile     TINYINT(1)      NOT NULL DEFAULT 1,
     created_at      DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_riders_utente
         FOREIGN KEY (id_utente) REFERENCES utenti(id)
         ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) 
 
 -- ------------------------------------------------------------
 -- TOKEN BLACKLIST
@@ -162,7 +159,7 @@ CREATE TABLE IF NOT EXISTS token_blacklist (
     token       TEXT            NOT NULL,
     created_at  DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
     KEY idx_token_blacklist_created (created_at)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) 
 
 -- ============================================================
 -- INDICI AGGIUNTIVI (performance)
