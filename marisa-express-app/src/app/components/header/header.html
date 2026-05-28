@@ -1,0 +1,72 @@
+<header class="header" [class.header--scrolled]="scrolled">
+  <div class="header__inner">
+
+    <!-- Logo -->
+    <a class="header__logo" routerLink="/">
+      <span class="header__logo-mark">M</span>
+      <span class="header__logo-text">Marisa Express</span>
+    </a>
+
+    <!-- Nav desktop -->
+    <nav class="header__nav">
+      <a class="header__link" routerLink="/" routerLinkActive="header__link--active"
+        [routerLinkActiveOptions]="{exact: true}">Home</a>
+      <a class="header__link" routerLink="/restaurant"
+        routerLinkActive="header__link--active">Ordina</a>
+
+      <ng-container *ngIf="isLoggato">
+        <a class="header__link" routerLink="/storico"
+          routerLinkActive="header__link--active">Storico</a>
+        <a class="header__link" routerLink="/wallet"
+          routerLinkActive="header__link--active">Wallet</a>
+        <a class="header__link" routerLink="/setting"
+          routerLinkActive="header__link--active">Impostazioni</a>
+      </ng-container>
+    </nav>
+
+    <!-- Azioni desktop -->
+    <div class="header__actions">
+      <!-- Carrello -->
+      <a routerLink="/checkout" class="header__cart"
+        *ngIf="(cartService.count$ | async)! > 0">
+        <span class="header__cart-icon">&#128722;</span>
+        <span class="header__cart-badge">{{ cartService.count$ | async }}</span>
+      </a>
+
+      <ng-container *ngIf="!isLoggato">
+        <button class="btn-primary header__cta" (click)="accedi()">Accedi</button>
+      </ng-container>
+
+      <ng-container *ngIf="isLoggato">
+        <span class="header__nome">{{ nomeUtente }}</span>
+        <button class="btn-secondary header__logout" (click)="logout()">Esci</button>
+      </ng-container>
+    </div>
+
+    <!-- Hamburger mobile -->
+    <button class="header__hamburger" (click)="toggleMenu()"
+      [class.header__hamburger--open]="menuOpen">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Menu mobile -->
+  <div class="header__mobile-menu" [class.header__mobile-menu--open]="menuOpen">
+    <a class="header__mobile-link" routerLink="/" (click)="menuOpen=false">Home</a>
+    <a class="header__mobile-link" routerLink="/restaurant" (click)="menuOpen=false">Ordina</a>
+
+    <ng-container *ngIf="isLoggato">
+      <a class="header__mobile-link" routerLink="/storico" (click)="menuOpen=false">Storico</a>
+      <a class="header__mobile-link" routerLink="/wallet" (click)="menuOpen=false">Wallet</a>
+      <a class="header__mobile-link" routerLink="/setting" (click)="menuOpen=false">Impostazioni</a>
+      <div class="header__mobile-divider"></div>
+      <span class="header__mobile-nome">{{ nomeUtente }}</span>
+      <button class="btn-danger header__mobile-logout" (click)="logout()">Esci dall'account</button>
+    </ng-container>
+
+    <ng-container *ngIf="!isLoggato">
+      <div class="header__mobile-divider"></div>
+      <button class="btn-primary" (click)="accedi()">Accedi</button>
+    </ng-container>
+  </div>
+</header>

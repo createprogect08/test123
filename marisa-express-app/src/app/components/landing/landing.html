@@ -1,0 +1,106 @@
+<div class="landing">
+  <section class="hero">
+    <div class="hero__overlay"></div>
+    <div class="hero__content">
+      <h1 class="hero__title">
+        Il cibo che ami,<br>
+        <span class="hero__title--accent">a casa tua</span>
+      </h1>
+      <p class="hero__subtitle">
+        Ristoranti locali, consegna veloce, pagamento semplice.
+      </p>
+
+      <div class="search-wrap">
+        <div class="search-box">
+          <span class="search-box__icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="2.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          </span>
+          <input
+            type="text"
+            class="search-box__input"
+            placeholder="Es. Via Roma 1, Milano"
+            [(ngModel)]="indirizzo"
+            (input)="onInput()"
+            (keyup.enter)="cerca()"
+            (blur)="chiudiSuggerimenti()"
+            autocomplete="off"
+          />
+          <button class="search-box__btn" (click)="cerca()" [disabled]="loading">
+            <span *ngIf="!loading">Cerca</span>
+            <span *ngIf="loading" class="spinner"></span>
+          </button>
+        </div>
+
+        <!-- Suggerimenti autocomplete -->
+        <div class="suggestions" *ngIf="mostraSuggerimenti && suggerimenti.length > 0">
+          <div
+            class="suggestions__item"
+            *ngFor="let s of suggerimenti"
+            (mousedown)="seleziona(s)"
+          >
+            <svg class="suggestions__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+            <div>
+              <p class="suggestions__short">{{ s.shortName }}</p>
+              <p class="suggestions__full">{{ s.displayName }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p *ngIf="errore" class="search-box__error">{{ errore }}</p>
+
+      <p class="hero__hint">
+        Non hai un account?
+        <a href="https://reimagined-orbit-r44jxj94649qhpv6-3001.app.github.dev" class="hero__hint-link">Accedi o registrati</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Come funziona -->
+  <section class="how">
+    <div class="container">
+      <h2 class="section-title">Come funziona</h2>
+      <div class="how__steps">
+        <div class="how__step">
+          <div class="how__step-num">1</div>
+          <h3>Inserisci l'indirizzo</h3>
+          <p>Dicci dove vuoi ricevere il tuo ordine</p>
+        </div>
+        <div class="how__step">
+          <div class="how__step-num">2</div>
+          <h3>Scegli il ristorante</h3>
+          <p>Sfoglia i ristoranti vicini a te</p>
+        </div>
+        <div class="how__step">
+          <div class="how__step-num">3</div>
+          <h3>Ricevi a casa</h3>
+          <p>Il rider porta tutto direttamente da te</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team CTA -->
+  <section class="team-cta">
+    <div class="container">
+      <div class="team-cta__grid">
+        <div class="team-cta__card">
+          <div class="team-cta__icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          </div>
+          <h3>Diventa Rider</h3>
+          <p>Lavora con orari flessibili e guadagna per ogni consegna</p>
+          <a href="https://reimagined-orbit-r44jxj94649qhpv6-3001.app.github.dev/signin/rider" class="btn-outline team-cta__btn">Registrati come Rider</a>
+        </div>
+        <div class="team-cta__card">
+          <div class="team-cta__icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="2"><path d="M3 3h18v4H3zM3 10h18v11H3z"/><path d="M10 10v11"/></svg>
+          </div>
+          <h3>Apri il tuo ristorante</h3>
+          <p>Porta il tuo locale online e raggiungi nuovi clienti</p>
+          <a href="https://reimagined-orbit-r44jxj94649qhpv6-3001.app.github.dev/signin/ristoratore" class="btn-outline team-cta__btn">Registra il ristorante</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

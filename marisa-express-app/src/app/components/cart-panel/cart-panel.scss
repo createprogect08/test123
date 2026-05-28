@@ -1,0 +1,113 @@
+.cart-panel {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #f3f4f6;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  padding: 1.5rem;
+  position: sticky;
+  top: 80px;
+
+  &__title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 1.25rem;
+  }
+
+  &__empty {
+    text-align: center;
+    padding: 2rem 0;
+    color: #9ca3af;
+    font-size: 0.875rem;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.6rem 0;
+  }
+
+  &__item-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__item-nome {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #1a1a1a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__item-prezzo {
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-top: 2px;
+  }
+
+  &__item-ctrl {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+  }
+
+  &__divider {
+    border-top: 1px solid #f3f4f6;
+    margin: 1rem 0;
+  }
+
+  &__totale {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    color: #1a1a1a;
+    margin-bottom: 1rem;
+
+    strong { font-size: 1.2rem; color: #FF6B35; }
+  }
+
+  &__btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  &__svuota {
+    width: 100%;
+    font-size: 0.8rem;
+    padding: 8px;
+  }
+}
+
+.ctrl-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1.5px solid #e5e7eb;
+  background: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  &:hover { border-color: #FF6B35; color: #FF6B35; }
+  &--add { background: #FF6B35; color: #fff; border-color: #FF6B35;
+    &:hover { background: #E5521C; } }
+}
+
+.ctrl-qty {
+  font-size: 0.9rem;
+  font-weight: 700;
+  min-width: 18px;
+  text-align: center;
+}

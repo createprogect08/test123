@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #F9F9F9;
+    color: #1a1a1a;
+    margin: 0;
+  }
+}
+
+@layer components {
+  .input-field {
+    @apply w-full px-4 py-3 rounded-xl border border-gray-200 text-sm text-gray-900
+           placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF6B35]
+           focus:border-transparent transition;
+  }
+
+  .btn-primary {
+    @apply w-full py-3 rounded-xl bg-[#FF6B35] text-white text-sm font-semibold
+           hover:bg-[#E5521C] active:scale-95 transition-all duration-150
+           disabled:opacity-60 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply w-full py-3 rounded-xl border border-gray-200 text-sm font-medium
+           text-gray-700 hover:bg-gray-50 active:scale-95 transition-all duration-150;
+  }
+
+  .card {
+    @apply bg-white rounded-2xl shadow-sm border border-gray-100 p-8;
+  }
+
+  .label {
+    @apply block text-xs font-medium text-gray-600 mb-1.5 uppercase tracking-wide;
+  }
+
+  .error-box {
+    @apply mb-4 text-xs text-red-500 bg-red-50 rounded-lg px-3 py-2;
+  }
+
+  .spinner {
+    @apply animate-spin h-4 w-4 text-white;
+  }
+}

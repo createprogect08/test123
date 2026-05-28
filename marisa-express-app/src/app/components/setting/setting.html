@@ -1,0 +1,52 @@
+<div class="page-container--narrow">
+  <h1 class="setting__title">Impostazioni</h1>
+
+  <!-- Nome -->
+  <div class="card setting__card">
+    <h2 class="setting__section">Modifica nome</h2>
+    <label class="label" for="nome">Nuovo nome</label>
+    <input id="nome" class="input-field" type="text"
+      [(ngModel)]="nome" placeholder="Il tuo nome" />
+    <p class="setting__successo" *ngIf="nomeSuccesso">{{ nomeSuccesso }}</p>
+    <div class="errore-banner" *ngIf="nomeErrore">{{ nomeErrore }}</div>
+    <button class="btn-primary setting__btn" (click)="salvaNome()" [disabled]="loadingNome || !nome.trim()">
+      <span *ngIf="!loadingNome">Salva nome</span>
+      <span *ngIf="loadingNome" class="spinner" style="width:16px;height:16px;border-width:2px;margin:0"></span>
+    </button>
+  </div>
+
+  <!-- Password -->
+  <div class="card setting__card">
+    <h2 class="setting__section">Cambia password</h2>
+
+    <label class="label" for="pw-attuale">Password attuale</label>
+    <input id="pw-attuale" class="input-field" type="password"
+      [(ngModel)]="passwordAttuale" placeholder="••••••••" />
+
+    <label class="label" for="pw-nuova" style="margin-top:12px">Nuova password</label>
+    <input id="pw-nuova" class="input-field" type="password"
+      [(ngModel)]="nuovaPassword" placeholder="••••••••" />
+
+    <label class="label" for="pw-conferma" style="margin-top:12px">Conferma nuova password</label>
+    <input id="pw-conferma" class="input-field" type="password"
+      [(ngModel)]="confermaPassword" placeholder="••••••••" />
+
+    <p class="setting__successo" *ngIf="pwSuccesso">{{ pwSuccesso }}</p>
+    <div class="errore-banner" *ngIf="pwErrore">{{ pwErrore }}</div>
+
+    <button class="btn-primary setting__btn" (click)="cambiaPassword()"
+      [disabled]="loadingPw || !passwordAttuale || !nuovaPassword || !confermaPassword">
+      <span *ngIf="!loadingPw">Aggiorna password</span>
+      <span *ngIf="loadingPw" class="spinner" style="width:16px;height:16px;border-width:2px;margin:0"></span>
+    </button>
+  </div>
+
+  <!-- Logout -->
+  <div class="card setting__card setting__card--danger">
+    <h2 class="setting__section">Account</h2>
+    <p class="text-muted">Disconnettiti dal tuo account su questo dispositivo.</p>
+    <button class="btn-danger setting__logout-btn" (click)="logout()">
+      Esci dall'account
+    </button>
+  </div>
+</div>

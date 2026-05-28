@@ -1,0 +1,19 @@
+<div class="card ordine-card" [class.nuovo]="ordine.nuovo">
+  <div class="flex justify-between items-center">
+    <span class="ristorante">🍽️ {{ ordine.nome_ristorante }}</span>
+    <span class="badge-accettato">€{{ ordine.totale | number:'1.2-2' }}</span>
+  </div>
+
+  <div class="ordine-info mt-2">
+    <p class="text-muted">📍 {{ ordine.indirizzo_consegna }}</p>
+    <p class="text-muted" *ngIf="ordine.distanza_km != null">
+      📏 {{ ordine.distanza_km }} km dal ristorante
+    </p>
+    <p class="text-muted">🕐 {{ ordine.created_at | date:'HH:mm' }}</p>
+  </div>
+
+  <div class="ordine-actions mt-4">
+    <button class="btn-secondary" (click)="rifiuta.emit(ordine.id)">✗ Rifiuta</button>
+    <button class="btn-primary"   (click)="accetta.emit(ordine.id)">✓ Accetta</button>
+  </div>
+</div>

@@ -1,0 +1,112 @@
+<div class="page-container--narrow" *ngIf="!loading && !errore && ordine">
+
+  <div class="tracking__header">
+    <button class="btn-back" (click)="location.back()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h1 class="tracking__title">Ordine #{{ ordine!.id }}</h1>
+  </div>
+
+  <!-- Annullato -->
+  <div class="card tracking__annullato" *ngIf="ordine.stato === 'annullato'">
+    <span class="tracking__annullato-icon">❌</span>
+    <p>Ordine annullato. I tuoi crediti sono stati rimborsati.</p>
+  </div>
+
+  <ng-container *ngIf="ordine.stato !== 'annullato'">
+
+    <!-- Timer stimato -->
+    <div class="card tracking__timer-card" *ngIf="minutiRimasti > 0 && ordine.stato !== 'consegnato'">
+      <div class="tracking__timer-icon">⏱️</div>
+      <div>
+        <p class="tracking__timer-label">Tempo stimato rimanente</p>
+        <p class="tracking__timer-value">~{{ minutiRimasti }} min</p>
+      </div>
+    </div>
+    <div class="card tracking__timer-card tracking__timer-card--done" *ngIf="ordine.stato === 'consegnato'">
+      <div class="tracking__timer-icon">🎉</div>
+      <div><p class="tracking__timer-value">Consegnato!</p></div>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="card tracking__card">
+      <div class="progress-bar-wrap">
+        <div class="progress-bar">
+          <div class="progress-bar__fill" [style.width.%]="getProgressPercent()"></div>
+        </div>
+        <span class="progress-bar__pct">{{ getProgressPercent() }}%</span>
+      </div>
+
+      <!-- Step tracker verticale -->
+      <div class="tracker">
+        <div class="tracker__step"
+          *ngFor="let s of stati; let i = index"
+          [class.tracker__step--done]="isCompleted(i)"
+          [class.tracker__step--active]="isActive(i)">
+          <div class="tracker__left">
+            <div class="tracker__dot">
+              <span *ngIf="isCompleted(i)">✓</span>
+              <span *ngIf="!isCompleted(i)">{{ i + 1 }}</span>
+            </div>
+            <div class="tracker__line" *ngIf="i < stati.length - 1"></div>
+          </div>
+          <div class="tracker__info">
+            <p class="tracker__label">{{ s.label }}</p>
+            <p class="tracker__desc" *ngIf="isActive(i)">{{ s.desc }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOKEN CONSEGNA: visibile quando rider è sotto casa -->
+    <div class="card tracking__card tracking__token-box" *ngIf="ordineSottoCasa() && !tokenSuccesso">
+      <p class="tracking__token-title">🔑 Il rider è sotto casa!</p>
+      <p class="text-muted">Comunica questo codice al rider per completare la consegna:</p>
+      <div class="tracking__token-display">{{ tokenConsegna }}</div>
+      <p class="tracking__token-hint">Il rider lo inserirà nella sua app</p>
+    </div>
+
+  </ng-container>
+
+  <!-- Riepilogo -->
+  <div class="card tracking__card">
+    <p class="label">Riepilogo ordine</p>
+    <div class="tracking__items">
+      <div class="tracking__item" *ngFor="let item of ordine.items">
+        <span>{{ item.quantita }}x {{ item.nome }}</span>
+        <span>{{ item.prezzo_unitario * item.quantita | currency:'EUR' }}</span>
+      </div>
+    </div>
+    <div class="tracking__totale">
+      <span>Totale pagato</span>
+      <strong>{{ ordine!.totale | currency:'EUR' }}</strong>
+    </div>
+  </div>
+
+  <!-- Annulla ordine -->
+  <div class="card tracking__card tracking__annulla-box" *ngIf="puoAnnullare()">
+    <div *ngIf="!confermaAnnulla">
+      <p class="tracking__annulla-info">Puoi annullare l'ordine e ricevere un rimborso completo.</p>
+      <button class="btn-danger" (click)="annulla()" [disabled]="annullaLoading">Annulla ordine</button>
+    </div>
+    <div *ngIf="confermaAnnulla" class="tracking__conferma">
+      <p>Sei sicuro? Riceverai un rimborso di <strong>{{ ordine!.totale | currency:'EUR' }}</strong></p>
+      <div class="tracking__conferma-btns">
+        <button class="btn-secondary" (click)="confermaAnnulla = false" [disabled]="annullaLoading">No, torna indietro</button>
+        <button class="btn-danger" (click)="annulla()" [disabled]="annullaLoading">
+          <span *ngIf="!annullaLoading">Sì, annulla</span>
+          <span *ngIf="annullaLoading" class="spinner" style="width:16px;height:16px;border-width:2px;margin:0"></span>
+        </button>
+      </div>
+    </div>
+    <p class="errore-banner" *ngIf="annullaErrore">{{ annullaErrore }}</p>
+  </div>
+
+</div>
+
+<div class="page-state" *ngIf="loading">
+  <div class="spinner"></div><p>Caricamento ordine...</p>
+</div>
+<div class="page-state page-state--error" *ngIf="errore">
+  <p>{{ errore }}</p>
+</div>

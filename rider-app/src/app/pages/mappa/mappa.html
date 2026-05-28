@@ -1,0 +1,97 @@
+<div class="consegna-container">
+
+  <div *ngIf="loading" class="loading-wrap">
+    <div class="spinner"></div>
+    <p>Caricamento ordine...</p>
+  </div>
+
+  <div *ngIf="errore" class="errore-banner">⚠️ {{ errore }}</div>
+
+  <div *ngIf="consegnato" class="success-banner">
+    🎉 Ordine completato! Ottimo lavoro!
+  </div>
+
+  <div *ngIf="!loading && ordine && !consegnato">
+
+    <!-- Info ordine -->
+    <div class="card ordine-info">
+      <div class="ordine-header">
+        <span class="ordine-id">#{{ ordine.id }}</span>
+        <span class="fase-badge" [class.fase-badge--consegna]="fase === 'consegna'">
+          {{ fase === 'ristorante' ? '→ Vai al ristorante' : '→ Vai dal cliente' }}
+        </span>
+      </div>
+      <h2 class="ristorante-nome">🍽️ {{ ordine.nome_ristorante }}</h2>
+      <p class="indirizzo">📍 <strong>Consegna:</strong> {{ ordine.indirizzo_consegna }}</p>
+      <p class="totale-info">💰 €{{ ordine.totale | number:'1.2-2' }}</p>
+    </div>
+
+    <!-- Step 1: al ristorante -->
+    <div class="card step-card" *ngIf="fase === 'ristorante'">
+      <div class="step-icon">🍽️</div>
+      <h3>Vai al ristorante</h3>
+      <p class="text-muted">Inserisci il codice token che ti dà il ristorante per confermare il ritiro.</p>
+
+      <div class="token-input-wrap">
+        <input
+          class="token-input"
+          [(ngModel)]="tokenInserito"
+          placeholder="Es. 031"
+          maxlength="10"
+          (keyup.enter)="verificaTokenRitiro()"
+        />
+        <p class="token-errore" *ngIf="tokenErrore">{{ tokenErrore }}</p>
+      </div>
+
+      <button class="btn-step" (click)="verificaTokenRitiro()" [disabled]="stepLoading || !tokenInserito">
+        <span *ngIf="!stepLoading">✅ Conferma ritiro</span>
+        <span *ngIf="stepLoading" class="spinner" style="width:16px;height:16px;border-width:2px;margin:0 auto;display:block"></span>
+      </button>
+    </div>
+
+    <!-- Step 2: dal cliente -->
+    <div class="card step-card step-card--consegna" *ngIf="fase === 'consegna'">
+      <div class="step-icon">🏠</div>
+      <h3>Vai dal cliente</h3>
+      <p class="text-muted indirizzo-grande">📍 {{ ordine.indirizzo_consegna }}</p>
+
+      <!-- Sotto-step A: notifica arrivo -->
+      <div *ngIf="!notificaInviata">
+        <button class="btn-step btn-step--notify"
+          (click)="segnalaSottoCasa()"
+          [disabled]="stepLoading">
+          <span *ngIf="!stepLoading">🔔 Sono sotto casa</span>
+          <span *ngIf="stepLoading" class="spinner" style="width:16px;height:16px;border-width:2px;margin:0 auto;display:block"></span>
+        </button>
+      </div>
+
+      <!-- Sotto-step B: inserisci codice cliente -->
+      <div *ngIf="notificaInviata">
+        <div class="notify-ok-banner">✅ Cliente notificato — chiedigli il codice</div>
+
+        <div class="token-input-wrap" style="margin-top:1.5rem">
+          <p class="token-label-hint">Inserisci il codice che ti comunica il cliente:</p>
+          <input
+            class="token-input"
+            [(ngModel)]="tokenConsegnaInserito"
+            placeholder="Es. 482931"
+            maxlength="10"
+            (keyup.enter)="segnaConsegnato()"
+          />
+          <p class="token-errore" *ngIf="stepErrore">{{ stepErrore }}</p>
+        </div>
+
+        <button class="btn-step btn-step--done"
+          (click)="segnaConsegnato()"
+          [disabled]="stepLoading || !tokenConsegnaInserito">
+          <span *ngIf="!stepLoading">🎉 Completa consegna</span>
+          <span *ngIf="stepLoading" class="spinner" style="width:16px;height:16px;border-width:2px;margin:0 auto;display:block"></span>
+        </button>
+      </div>
+
+    </div>
+
+    <div class="errore-banner" *ngIf="stepErrore && !notificaInviata">{{ stepErrore }}</div>
+
+  </div>
+</div>

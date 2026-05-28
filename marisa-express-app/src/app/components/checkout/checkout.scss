@@ -1,0 +1,97 @@
+.checkout {
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 1.5rem;
+  }
+
+  &__card { margin-bottom: 1rem; }
+
+  &__ristorante {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-top: 4px;
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 4px;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    color: #374151;
+  }
+
+  &__totale {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f3f4f6;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    font-size: 0.95rem;
+    color: #1a1a1a;
+    strong { font-size: 1.1rem; color: #FF6B35; }
+  }
+
+  &__metodi {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 4px;
+  }
+
+  &__metodo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1rem;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+
+    input[type="radio"] { accent-color: #FF6B35; width: 16px; height: 16px; }
+
+    &--active { border-color: #FF6B35; background: #fff7ed; }
+
+    div { display: flex; flex-direction: column; }
+  }
+
+  &__metodo-nome {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+
+  &__metodo-sub {
+    font-size: 0.78rem;
+    color: #6b7280;
+    margin-top: 2px;
+  }
+
+  &__cta {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.checkout__back { margin-bottom: 12px; }
+.btn-back {
+  background: none; border: none; cursor: pointer; color: #6b7280;
+  padding: 6px 10px; border-radius: 8px;
+  display: flex; align-items: center; gap: 6px; font-size: 0.9rem;
+  &:hover { background: #f3f4f6; color: #111; }
+}

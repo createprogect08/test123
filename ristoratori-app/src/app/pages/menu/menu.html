@@ -1,0 +1,124 @@
+<div class="page-header">
+  <div>
+    <h1>Menu</h1>
+    <p class="text-muted">{{ items.length }} item nel tuo menu</p>
+  </div>
+  <button class="btn-primary" (click)="apriForm()">+ Aggiungi item</button>
+</div>
+
+<!-- Form modale -->
+<div class="modal-overlay" *ngIf="showForm" (click)="chiudiForm()">
+  <div class="modal card" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>{{ editingId ? 'Modifica item' : 'Nuovo item' }}</h2>
+      <button class="btn-close" (click)="chiudiForm()">✕</button>
+    </div>
+
+    <div class="form-group">
+      <label class="label">Nome *</label>
+      <input class="input-field" [(ngModel)]="form.nome" placeholder="es. Margherita" />
+    </div>
+
+    <div class="form-group">
+      <label class="label">Descrizione</label>
+      <textarea class="input-field" [(ngModel)]="form.descrizione"
+                placeholder="Ingredienti, allergeni..." rows="3"></textarea>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="label">Prezzo (€) *</label>
+        <input class="input-field" type="number" step="0.50" min="0"
+               [(ngModel)]="form.prezzo" placeholder="0.00" />
+      </div>
+      <div class="form-group">
+        <label class="label">Categoria</label>
+        <input class="input-field" [(ngModel)]="form.categoria"
+               placeholder="es. Pizza, Bevande..." list="categorie-list" />
+        <datalist id="categorie-list">
+          <option *ngFor="let cat of categorie" [value]="cat">{{ cat }}</option>
+        </datalist>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="label">Immagine</label>
+      <div class="immagine-upload-area">
+        <div class="immagine-preview-small" *ngIf="immaginePreview">
+          <img [src]="immaginePreview" alt="Anteprima" />
+        </div>
+        <label class="immagine-upload-btn">
+          📷 {{ immaginePreview ? 'Cambia foto' : 'Carica foto' }}
+          <input type="file" accept="image/*" (change)="onImmagineSelezionata($event)" />
+        </label>
+      </div>
+    </div>
+
+    <div class="form-toggle">
+      <label class="toggle-label">
+        <input type="checkbox" [(ngModel)]="form.disponibile" />
+        <span class="toggle-track"></span>
+        Disponibile
+      </label>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-secondary" (click)="chiudiForm()">Annulla</button>
+      <button class="btn-primary" (click)="salva()" [disabled]="salvataggio">
+        {{ salvataggio ? 'Salvataggio...' : 'Salva' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Loading -->
+<div class="loading-state" *ngIf="loading">
+  <div class="spinner"></div>
+</div>
+
+<!-- Empty -->
+<div class="empty-state" *ngIf="!loading && items.length === 0">
+  <div class="empty-icon">🍕</div>
+  <h3>Menu vuoto</h3>
+  <p class="text-muted">Aggiungi il primo item al tuo menu</p>
+  <button class="btn-primary mt-4" (click)="apriForm()">+ Aggiungi item</button>
+</div>
+
+<!-- Lista menu -->
+<div class="menu-grid">
+  <div class="menu-card card" *ngFor="let item of items"
+       [class.non-disponibile]="!item.disponibile">
+
+    <div class="menu-card-inner">
+      <div class="menu-card-thumb" *ngIf="item.foto">
+        <img [src]="'/ristorante' + item.foto" [alt]="item.nome" />
+      </div>
+      <div class="menu-card-thumb-placeholder" *ngIf="!item.foto">🍽️</div>
+
+      <div class="menu-card-body">
+        <div class="menu-card-header">
+          <div class="item-info">
+            <h3>{{ item.nome }}</h3>
+            <span class="item-categoria text-muted" *ngIf="item.categoria">{{ item.categoria }}</span>
+          </div>
+          <div class="item-prezzo">€{{ item.prezzo.toFixed(2) }}</div>
+        </div>
+        <p class="item-desc" *ngIf="item.descrizione">{{ item.descrizione }}</p>
+      </div>
+    </div>
+
+    <div class="menu-card-footer">
+      <label class="toggle-label small">
+        <input type="checkbox" [checked]="item.disponibile"
+               (change)="toggleDisponibile(item)" />
+        <span class="toggle-track"></span>
+        {{ item.disponibile ? 'Disponibile' : 'Non disponibile' }}
+      </label>
+      <div class="item-azioni">
+        <button class="btn-secondary btn-sm" (click)="apriForm(item)">✏️ Modifica</button>
+        <button class="btn-danger btn-sm" (click)="elimina(item.id, item.nome)">🗑️</button>
+      </div>
+    </div>
+
+  </div>
+</div>

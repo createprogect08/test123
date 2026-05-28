@@ -1,0 +1,80 @@
+<div *ngIf="loading" class="loading-wrap">
+  <div class="spinner"></div>
+  <p>Caricamento profilo...</p>
+</div>
+
+<div *ngIf="!loading">
+
+  <!-- Profilo -->
+  <div class="card mb-4">
+    <div class="profilo-header">
+      <div class="avatar-wrap">
+        <img *ngIf="fotoPreview" [src]="fotoPreview" class="avatar" alt="Foto profilo" />
+        <div *ngIf="!fotoPreview" class="avatar-placeholder">🛵</div>
+        <label class="avatar-edit" for="foto-input">📷</label>
+        <input id="foto-input" type="file" accept="image/*"
+               (change)="onFotoChange($event)" hidden />
+      </div>
+      <div>
+        <h2 class="nome">{{ utente?.nome }}</h2>
+        <p class="text-muted">{{ utente?.email }}</p>
+        <span [class]="form.disponibile ? 'badge-accettato' : 'badge-rifiutato'">
+          {{ form.disponibile ? 'Disponibile' : 'Non disponibile' }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <div class="card mb-4">
+    <h3 class="section-title">Dati veicolo</h3>
+
+    <div class="form-group">
+      <label class="label" for="veicolo">Tipo veicolo</label>
+      <select id="veicolo" class="input-field" [(ngModel)]="form.veicolo">
+        <option value="bici">🚲 Bici</option>
+        <option value="moto">🏍️ Moto</option>
+        <option value="auto">🚗 Auto</option>
+        <option value="monopattino">🛴 Monopattino</option>
+      </select>
+    </div>
+
+    <div class="form-group mt-4">
+      <label class="label" for="targa">Targa (opzionale)</label>
+      <input id="targa" class="input-field" type="text"
+             placeholder="Es. AB123CD"
+             [(ngModel)]="form.targa" />
+    </div>
+
+    <div class="form-group mt-4">
+      <label class="label">Disponibilità</label>
+      <div class="toggle-wrap">
+        <span class="text-muted">
+          {{ form.disponibile ? 'Sono disponibile a ricevere ordini' : 'Non disponibile' }}
+        </span>
+        <button
+          class="toggle-btn"
+          [class.active]="form.disponibile"
+          (click)="form.disponibile = !form.disponibile">
+          {{ form.disponibile ? 'ON' : 'OFF' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feedback -->
+  <div *ngIf="successo" class="success-banner mb-4">✓ {{ successo }}</div>
+  <div *ngIf="errore"   class="errore-banner">⚠️ {{ errore }}</div>
+
+  <!-- Azioni -->
+  <button class="btn-primary w-full mb-3"
+          (click)="salva()"
+          [disabled]="salvando">
+    {{ salvando ? 'Salvataggio...' : 'Salva modifiche' }}
+  </button>
+
+  <button class="btn-danger w-full" (click)="logout()">
+    Esci dall'account
+  </button>
+
+</div>

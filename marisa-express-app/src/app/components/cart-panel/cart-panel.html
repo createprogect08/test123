@@ -1,0 +1,37 @@
+<div class="cart-panel">
+  <h3 class="cart-panel__title">Il tuo ordine</h3>
+
+  <ng-container *ngIf="(cartService.items$ | async) as items">
+    <div *ngIf="items.length === 0" class="cart-panel__empty">
+      <p>Aggiungi qualcosa dal menu</p>
+    </div>
+
+    <div *ngIf="items.length > 0">
+      <div class="cart-panel__item" *ngFor="let item of items">
+        <div class="cart-panel__item-info">
+          <span class="cart-panel__item-nome">{{ item.nome }}</span>
+          <span class="cart-panel__item-prezzo">{{ item.prezzo | currency:'EUR' }}</span>
+        </div>
+        <div class="cart-panel__item-ctrl">
+          <button class="ctrl-btn" (click)="rimuovi(item.id_menu_item)">-</button>
+          <span class="ctrl-qty">{{ item.quantita }}</span>
+          <button class="ctrl-btn ctrl-btn--add" (click)="aggiungi(item)">+</button>
+        </div>
+      </div>
+
+      <div class="cart-panel__divider"></div>
+
+      <div class="cart-panel__totale">
+        <span>Totale</span>
+        <strong>{{ cartService.totale$ | async | currency:'EUR' }}</strong>
+      </div>
+
+      <button class="btn-primary cart-panel__btn" (click)="checkout.emit()">
+        Completa ordine
+      </button>
+      <button class="btn-danger cart-panel__svuota" (click)="svuota()">
+        Svuota carrello
+      </button>
+    </div>
+  </ng-container>
+</div>

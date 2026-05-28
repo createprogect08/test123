@@ -1,0 +1,89 @@
+<div class="page-header">
+  <div>
+    <h1>Ordini</h1>
+    <p class="text-muted">Gli ordini arrivano in tempo reale</p>
+  </div>
+  <button class="btn-secondary" (click)="caricaOrdini()">↻ Aggiorna</button>
+</div>
+
+<div class="loading-state" *ngIf="loading">
+  <div class="spinner"></div>
+  <p>Caricamento ordini...</p>
+</div>
+
+<div class="text-error mt-4" *ngIf="errore">{{ errore }}</div>
+
+<!-- ORDINI IN ATTESA -->
+<h2 class="sezione-titolo" *ngIf="!loading">
+  🔔 In attesa
+  <span class="badge-count" *ngIf="ordiniAttesa.length > 0">{{ ordiniAttesa.length }}</span>
+</h2>
+
+<div class="empty-state" *ngIf="!loading && ordiniAttesa.length === 0">
+  <div class="empty-icon">✅</div>
+  <p class="text-muted">Nessun ordine in attesa</p>
+</div>
+
+<div class="ordini-grid">
+  <div class="ordine-card card"
+       *ngFor="let o of ordiniAttesa"
+       [class.nuovo]="nuovoOrdineId === o.id">
+    <div class="ordine-top">
+      <div class="ordine-id">#{{ o.id }}</div>
+      <span class="badge-attesa">In attesa</span>
+      <div class="ordine-time text-muted">{{ o.created_at | date:'HH:mm' }}</div>
+    </div>
+    <div class="ordine-cliente">
+      <div><strong>👤 {{ o.nome_utente || o.nome || 'Cliente' }}</strong></div>
+      <div class="text-muted">📍 {{ o.indirizzo_consegna || 'Indirizzo non specificato' }}</div>
+    </div>
+    <div class="ordine-items">
+      <div class="item-row" *ngFor="let item of o.items">
+        <span class="item-qty">{{ item.quantita }}×</span>
+        <span class="item-nome">{{ item.nome }}</span>
+        <span class="item-prezzo text-muted">€{{ (item.prezzo * item.quantita).toFixed(2) }}</span>
+      </div>
+    </div>
+    <div class="ordine-footer">
+      <div class="totale">Totale <strong>€{{ totale(o.items).toFixed(2) }}</strong></div>
+      <div class="azioni">
+        <button class="btn-danger" (click)="rifiuta(o.id)">✕ Rifiuta</button>
+        <button class="btn-primary" (click)="accetta(o.id)">✓ Accetta</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ORDINI ACCETTATI -->
+<h2 class="sezione-titolo" *ngIf="!loading && ordiniAccettati.length > 0">
+  🍳 In preparazione
+  <span class="badge-count">{{ ordiniAccettati.length }}</span>
+</h2>
+
+<div class="ordini-grid">
+  <div class="ordine-card card ordine-card--accettato"
+       *ngFor="let o of ordiniAccettati">
+    <div class="ordine-top">
+      <div class="ordine-id">#{{ o.id }}</div>
+      <span class="badge-accettato">Accettato</span>
+      <div class="ordine-time text-muted">{{ o.created_at | date:'HH:mm' }}</div>
+    </div>
+    <div class="ordine-cliente">
+      <div><strong>👤 {{ o.nome_utente || o.nome || 'Cliente' }}</strong></div>
+      <div class="text-muted">📍 {{ o.indirizzo_consegna || 'Indirizzo non specificato' }}</div>
+    </div>
+    <div class="ordine-items">
+      <div class="item-row" *ngFor="let item of o.items">
+        <span class="item-qty">{{ item.quantita }}×</span>
+        <span class="item-nome">{{ item.nome }}</span>
+        <span class="item-prezzo text-muted">€{{ (item.prezzo * item.quantita).toFixed(2) }}</span>
+      </div>
+    </div>
+    <div class="ordine-footer">
+      <div class="totale">Totale <strong>€{{ totale(o.items).toFixed(2) }}</strong></div>
+      <div class="token-ordine">
+        🎫 Token ritiro: <strong class="token-code">{{ tokenOrdine(o.id) }}</strong>
+      </div>
+    </div>
+  </div>
+</div>

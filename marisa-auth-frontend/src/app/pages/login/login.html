@@ -1,0 +1,107 @@
+<div class="min-h-screen flex flex-col justify-center items-center px-4 bg-[#F9F9F9]">
+
+  <div class="w-full max-w-sm">
+
+    <!-- Logo -->
+    <div class="mb-10 text-center">
+      <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-[#FF6B35] mb-4">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="white"/>
+        </svg>
+      </div>
+      <h1 class="text-2xl font-semibold text-gray-900 tracking-tight">Marisa Express</h1>
+      <p class="text-sm text-gray-500 mt-1">Bentornato</p>
+    </div>
+
+    <!-- Card -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+
+      <h2 class="text-lg font-semibold text-gray-900 mb-1">Accedi</h2>
+      <p class="text-sm text-gray-500 mb-6">Inserisci la tua password per continuare</p>
+
+      <!-- Email readonly -->
+      <div class="mb-4">
+        <label class="block text-xs font-medium text-gray-600 mb-1.5 uppercase tracking-wide">
+          Email
+        </label>
+        <div class="flex items-center w-full px-4 py-3 rounded-xl border border-gray-100
+                    bg-gray-50 text-sm text-gray-500 justify-between">
+          <span>{{ email }}</span>
+          <button (click)="torna()" class="text-[#FF6B35] text-xs font-medium hover:underline ml-2">
+            Modifica
+          </button>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-4">
+        <label class="block text-xs font-medium text-gray-600 mb-1.5 uppercase tracking-wide">
+          Password
+        </label>
+        <div class="relative">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            [(ngModel)]="password"
+            (keyup.enter)="accedi()"
+            placeholder="La tua password"
+            class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm text-gray-900
+                   placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF6B35]
+                   focus:border-transparent transition pr-12"
+          />
+          <button
+            type="button"
+            (click)="showPassword = !showPassword"
+            class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+          >
+            <svg *ngIf="!showPassword" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+            </svg>
+            <svg *ngIf="showPassword" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Errore -->
+      <div *ngIf="error" class="mb-4 text-xs text-red-500 bg-red-50 rounded-lg px-3 py-2">
+        {{ error }}
+      </div>
+
+      <!-- Bottone accedi -->
+      <button
+        (click)="accedi()"
+        [disabled]="loading"
+        class="w-full py-3 rounded-xl bg-[#FF6B35] text-white text-sm font-semibold
+               hover:bg-[#E5521C] active:scale-95 transition-all duration-150
+               disabled:opacity-60 disabled:cursor-not-allowed"
+      >
+        <span *ngIf="!loading">Accedi</span>
+        <span *ngIf="loading" class="flex items-center justify-center gap-2">
+          <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+          </svg>
+          Attendere...
+        </span>
+      </button>
+
+      <!-- Password dimenticata -->
+      <div class="mt-4 text-center">
+        <button class="text-xs text-gray-400 hover:text-[#FF6B35] transition">
+          Password dimenticata?
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Torna indietro -->
+    <div class="mt-6 text-center">
+      <button (click)="torna()" class="text-xs text-gray-400 hover:text-gray-600 transition">
+        Non sei tu? Torna indietro
+      </button>
+    </div>
+
+  </div>
+</div>

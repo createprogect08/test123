@@ -1,0 +1,45 @@
+.setting {
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 1.5rem;
+  }
+
+  &__card {
+    margin-bottom: 1rem;
+
+    &--danger {
+      border-color: #fecaca;
+    }
+  }
+
+  &__section {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 1rem;
+  }
+
+  &__btn {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  &__successo {
+    color: #16a34a;
+    font-size: 0.875rem;
+    margin-top: 8px;
+  }
+
+  &__logout-btn {
+    margin-top: 0.75rem;
+    border: 1.5px solid #fecaca;
+    border-radius: 12px;
+    padding: 10px 20px;
+    &:hover { background: #fef2f2; }
+  }
+}

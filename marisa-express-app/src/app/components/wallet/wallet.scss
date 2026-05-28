@@ -1,0 +1,120 @@
+.wallet {
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 1.5rem;
+  }
+
+  &__saldo-card {
+    text-align: center;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &__saldo {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #FF6B35;
+    margin: 0.5rem 0 1.25rem;
+  }
+
+  &__ricarica-btn {
+    padding: 12px 36px;
+  }
+
+  &__section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 1rem;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  &__tx {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem;
+  }
+
+  &__tx-tipo {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+
+  &__tx-importo {
+    font-size: 1rem;
+    font-weight: 700;
+
+    &--plus  { color: #16a34a; }
+    &--minus { color: #dc2626; }
+  }
+
+  &__successo {
+    color: #16a34a;
+    font-size: 0.875rem;
+    margin-top: 8px;
+    text-align: center;
+  }
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 20px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+
+  &__title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 1.25rem;
+  }
+
+  &__preset {
+    display: flex;
+    gap: 0.5rem;
+    margin: 0.75rem 0 1rem;
+  }
+
+  &__preset-btn {
+    flex: 1;
+    padding: 8px;
+    border-radius: 10px;
+    border: 1.5px solid #e5e7eb;
+    background: #fff;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: #374151;
+    transition: all 0.15s;
+    &:hover { border-color: #FF6B35; color: #FF6B35; }
+  }
+
+  &__footer {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    button { flex: 1; }
+  }
+}

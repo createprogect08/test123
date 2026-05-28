@@ -1,0 +1,111 @@
+.team {
+  min-height: 100vh;
+
+  &__hero {
+    background: linear-gradient(135deg, #FF6B35 0%, #ff8c5a 100%);
+    padding: 5rem 1rem;
+    text-align: center;
+    color: #fff;
+  }
+
+  &__hero-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+  }
+
+  &__hero-sub {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+
+    @media (max-width: 700px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__card {
+    background: #fff;
+    border-radius: 20px;
+    border: 1px solid #f3f4f6;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  &__card-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    margin-bottom: 1.25rem;
+    background: #fff7ed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+
+    &--rider::after        { content: '🛵'; }
+    &--ristoratore::after  { content: '🍽️'; }
+  }
+
+  &__card-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 0.75rem;
+  }
+
+  &__card-desc {
+    font-size: 0.9rem;
+    color: #6b7280;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+
+  &__vantaggi {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+
+    li {
+      font-size: 0.875rem;
+      color: #374151;
+      padding-left: 1.25rem;
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #FF6B35;
+      }
+    }
+  }
+
+  &__btn {
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    padding: 12px 24px;
+  }
+}

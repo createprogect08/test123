@@ -1,0 +1,60 @@
+<div class="detail" *ngIf="!loading && !errore && ristorante">
+
+  <!-- Hero -->
+  <div class="detail__hero"
+    [style.background-image]="'url(' + getFoto(ristorante.foto_profilo) + ')'">
+    <div class="detail__hero-overlay">
+      <div class="detail__hero-content">
+        <button class="detail__back" (click)="location.back()">&#8592; Indietro</button>
+        <h1 class="detail__nome">{{ ristorante.nome }}</h1>
+        <p class="detail__desc">{{ ristorante.descrizione }}</p>
+        <span class="detail__categoria">{{ ristorante.categoria }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail__body">
+
+    <!-- Menu -->
+    <div class="detail__menu">
+      <h2 class="detail__section-title">Menu</h2>
+      <div class="menu-list">
+        <div class="menu-item" *ngFor="let item of menu" [class.menu-item--indisponibile]="!item.disponibile">
+          <img class="menu-item__foto" [src]="getFoto(item.foto)" [alt]="item.nome" />
+          <div class="menu-item__info">
+            <h3 class="menu-item__nome">{{ item.nome }}</h3>
+            <span class="menu-item__categoria" *ngIf="item.categoria">{{ item.categoria }}</span>
+            <p class="menu-item__desc">{{ item.descrizione }}</p>
+            <span class="menu-item__prezzo">{{ item.prezzo | currency:'EUR' }}</span>
+          </div>
+          <div class="menu-item__ctrl" *ngIf="item.disponibile">
+            <button class="ctrl-btn" (click)="rimuovi(item)" [disabled]="getQuantita(item.id) === 0">-</button>
+            <span class="ctrl-qty">{{ getQuantita(item.id) }}</span>
+            <button class="ctrl-btn ctrl-btn--add" (click)="aggiungi(item)">+</button>
+          </div>
+          <span class="menu-item__nd" *ngIf="!item.disponibile">Non disponibile</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carrello desktop -->
+    <div class="detail__cart">
+      <app-cart-panel (checkout)="vaiCheckout()"></app-cart-panel>
+    </div>
+  </div>
+
+  <!-- Carrello mobile FAB -->
+  <div class="cart-fab" *ngIf="(cartService.count$ | async)! > 0" (click)="vaiCheckout()">
+    <span class="cart-fab__count">{{ cartService.count$ | async }}</span>
+    Vai al carrello &mdash; {{ cartService.totale$ | async | currency:'EUR' }}
+  </div>
+</div>
+
+<div class="page-state" *ngIf="loading">
+  <div class="spinner"></div>
+  <p>Caricamento...</p>
+</div>
+
+<div class="page-state page-state--error" *ngIf="errore">
+  <p>{{ errore }}</p>
+</div>

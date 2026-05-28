@@ -1,0 +1,214 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  background: #fff;
+  border-bottom: 1px solid #f3f4f6;
+  transition: box-shadow 0.2s;
+
+  &--scrolled {
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  }
+
+  &__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  &__logo-mark {
+    width: 34px;
+    height: 34px;
+    background: #FF6B35;
+    color: #fff;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__logo-text {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #1a1a1a;
+
+    @media (max-width: 400px) { display: none; }
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex: 1;
+
+    @media (max-width: 768px) { display: none; }
+  }
+
+  &__link {
+    padding: 0.4rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #6b7280;
+    text-decoration: none;
+    transition: all 0.15s;
+
+    &:hover { color: #1a1a1a; background: #f9fafb; }
+
+    &--active { color: #FF6B35; font-weight: 600; }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-left: auto;
+
+    @media (max-width: 768px) { display: none; }
+  }
+
+  &__cart {
+    position: relative;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: #fff7ed;
+    text-decoration: none;
+    transition: background 0.15s;
+    &:hover { background: #ffe0cc; }
+  }
+
+  &__cart-icon { font-size: 1.1rem; }
+
+  &__cart-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: #FF6B35;
+    color: #fff;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__nome {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #374151;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__cta { padding: 8px 18px; font-size: 0.875rem; }
+
+  &__logout {
+    padding: 8px 16px;
+    font-size: 0.875rem;
+  }
+
+  /* Hamburger */
+  &__hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    margin-left: auto;
+
+    @media (max-width: 768px) { display: flex; }
+
+    span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #374151;
+      border-radius: 2px;
+      transition: all 0.25s;
+    }
+
+    &--open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    &--open span:nth-child(2) { opacity: 0; }
+    &--open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  }
+
+  /* Menu mobile */
+  &__mobile-menu {
+    display: none;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.75rem 1rem 1rem;
+    border-top: 1px solid #f3f4f6;
+    background: #fff;
+
+    @media (max-width: 768px) {
+      display: flex;
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 1rem;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+
+    &--open {
+      max-height: 400px;
+      padding: 0.75rem 1rem 1rem;
+    }
+  }
+
+  &__mobile-link {
+    padding: 0.6rem 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #374151;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.15s;
+    &:hover { background: #f9fafb; color: #FF6B35; }
+  }
+
+  &__mobile-divider {
+    border-top: 1px solid #f3f4f6;
+    margin: 0.5rem 0;
+  }
+
+  &__mobile-nome {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #6b7280;
+    padding: 0 0.5rem 0.25rem;
+  }
+
+  &__mobile-logout {
+    text-align: left;
+    padding: 0.6rem 0.5rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+  }
+}

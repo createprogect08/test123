@@ -1,0 +1,62 @@
+<div class="checkout__back">
+  <button class="btn-back" (click)="tornaIndietro()">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Torna al ristorante
+  </button>
+</div>
+
+<div class="page-container--narrow">
+  <h1 class="checkout__title">Riepilogo ordine</h1>
+
+  <div class="card checkout__card" *ngIf="cartService.nomeRistorante">
+    <p class="label">Ristorante</p>
+    <p class="checkout__ristorante">{{ cartService.nomeRistorante }}</p>
+  </div>
+
+  <div class="card checkout__card">
+    <p class="label">Articoli</p>
+    <div class="checkout__items">
+      <div class="checkout__item" *ngFor="let item of cartService.items$ | async">
+        <span>{{ item.quantita }}x {{ item.nome }}</span>
+        <span>{{ item.prezzo * item.quantita | currency:'EUR' }}</span>
+      </div>
+    </div>
+    <div class="checkout__totale">
+      <span>Totale</span>
+      <strong>{{ cartService.totale$ | async | currency:'EUR' }}</strong>
+    </div>
+  </div>
+
+  <div class="card checkout__card">
+    <label class="label" for="indirizzo">Indirizzo di consegna</label>
+    <input id="indirizzo" class="input-field" type="text"
+      [(ngModel)]="indirizzo" placeholder="Via, numero civico, città" />
+  </div>
+
+  <div class="card checkout__card">
+    <p class="label">Metodo di pagamento</p>
+    <div class="checkout__metodi">
+      <label class="checkout__metodo" [class.checkout__metodo--active]="metodoPagamento === 'crediti'">
+        <input type="radio" name="metodo" value="crediti" [(ngModel)]="metodoPagamento" />
+        <div>
+          <span class="checkout__metodo-nome">Usa crediti</span>
+          <span class="checkout__metodo-sub">Saldo disponibile: {{ saldo | currency:'EUR' }}</span>
+        </div>
+      </label>
+      <label class="checkout__metodo" [class.checkout__metodo--active]="metodoPagamento === 'stripe'">
+        <input type="radio" name="metodo" value="stripe" [(ngModel)]="metodoPagamento" />
+        <div>
+          <span class="checkout__metodo-nome">Paga con carta</span>
+          <span class="checkout__metodo-sub">Stripe — sicuro e veloce</span>
+        </div>
+      </label>
+    </div>
+  </div>
+
+  <div class="errore-banner" *ngIf="errore">{{ errore }}</div>
+
+  <button class="btn-primary checkout__cta" (click)="conferma()" [disabled]="loading || !indirizzo">
+    <span *ngIf="!loading">Conferma ordine</span>
+    <span *ngIf="loading" class="spinner" style="width:18px;height:18px;border-width:2px;margin:0"></span>
+  </button>
+</div>

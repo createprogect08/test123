@@ -1,0 +1,51 @@
+<div class="page-container--narrow">
+  <h1 class="storico__title">I tuoi ordini</h1>
+
+  <div class="page-state" *ngIf="loading">
+    <div class="spinner"></div><p>Caricamento...</p>
+  </div>
+  <div class="page-state page-state--error" *ngIf="errore">
+    <p>{{ errore }}</p>
+  </div>
+
+  <div *ngIf="!loading && !errore">
+    <div *ngIf="ordini.length === 0" class="page-state">
+      <p>Nessun ordine ancora. Inizia a ordinare!</p>
+    </div>
+
+    <div class="storico__list" *ngIf="ordini.length > 0">
+      <div class="card storico__card"
+        *ngFor="let o of ordini"
+        [class.storico__card--attivo]="isAttivo(o.stato)"
+        (click)="apriOrdine(o)"
+        [style.cursor]="isAttivo(o.stato) ? 'pointer' : 'default'">
+
+        <div class="storico__card-header">
+          <div>
+            <p class="storico__ristorante">{{ o.nome_ristorante || 'Ristorante' }}</p>
+            <p class="text-muted" style="margin-top:2px">{{ o.created_at | date:'dd/MM/yyyy HH:mm' }}</p>
+          </div>
+          <span [class]="getBadgeClass(o.stato)">{{ getStatoLabel(o.stato) }}</span>
+        </div>
+
+        <div class="storico__items">
+          <span class="storico__item" *ngFor="let item of o.items">
+            {{ item.quantita }}x {{ item.nome }}
+          </span>
+        </div>
+
+        <div class="storico__footer">
+          <strong class="storico__totale">{{ o.totale | currency:'EUR' }}</strong>
+          <div class="storico__actions">
+            <span class="storico__live-badge" *ngIf="isAttivo(o.stato)">
+              🔴 In corso — tocca per seguire
+            </span>
+            <button class="btn-secondary storico__btn" (click)="$event.stopPropagation(); assistenza(o.id)">
+              Assistenza
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

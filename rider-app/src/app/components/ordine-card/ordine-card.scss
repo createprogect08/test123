@@ -1,0 +1,29 @@
+.ordine-card {
+  margin-bottom: 12px;
+  transition: transform 0.15s;
+
+  &.nuovo {
+    border-left: 4px solid #FF6B35;
+    animation: pulse 1s ease-in-out 3;
+  }
+
+  &:active { transform: scale(0.99); }
+
+  .ristorante {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #1a1a1a;
+  }
+}
+
+.ordine-actions {
+  display: flex;
+  gap: 10px;
+
+  button { flex: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  50%       { box-shadow: 0 4px 16px rgba(255,107,53,0.3); }
+}

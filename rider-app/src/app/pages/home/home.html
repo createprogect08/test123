@@ -1,0 +1,31 @@
+<div class="home-container">
+  <div class="hero">
+    <h2>Ciao, {{ utente?.nome?.split(' ')[0] }}! 👋</h2>
+    <p class="subtitle">Ordini disponibili nella tua zona</p>
+    <button class="btn-refresh" (click)="caricaOrdini()">↺ Aggiorna</button>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Ricerca ordini...</p>
+  </div>
+
+  <div *ngIf="errore" class="errore-banner">
+    ⚠️ {{ errore }}
+  </div>
+
+  <div *ngIf="!loading && ordini.length === 0" class="empty-state">
+    <div class="empty-icon">🛵</div>
+    <h3>Nessun ordine disponibile</h3>
+    <p>Aspetta... arriveranno nuovi ordini in tempo reale!</p>
+  </div>
+
+  <div class="ordini-list">
+    <app-ordine-card
+      *ngFor="let ordine of ordini"
+      [ordine]="ordine"
+      (accetta)="onAccetta($event)"
+      (rifiuta)="onRifiuta($event)"
+    />
+  </div>
+</div>

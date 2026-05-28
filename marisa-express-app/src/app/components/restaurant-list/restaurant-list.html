@@ -1,0 +1,91 @@
+<div class="restaurant-list">
+
+  <div *ngIf="mostraFormIndirizzo" class="address-gate">
+    <div class="address-gate__box">
+      <h2>Dove vuoi ricevere?</h2>
+      <p class="text-muted">Inizia a digitare il tuo indirizzo</p>
+
+      <div class="search-wrap">
+        <div class="search-inline">
+          <input
+            type="text"
+            [(ngModel)]="cercaIndirizzo"
+            (ngModelChange)="onInput()"
+            (keyup.enter)="impostaIndirizzo()"
+            placeholder="Es. Via Roma 1, Milano"
+            class="search-inline__input"
+            autocomplete="off"
+          />
+          <button class="search-inline__btn" (click)="impostaIndirizzo()" [disabled]="cercaLoading">
+            <span *ngIf="!cercaLoading">Cerca</span>
+            <span *ngIf="cercaLoading" class="spinner" style="width:14px;height:14px;border-width:2px;margin:0"></span>
+          </button>
+        </div>
+
+        <div class="suggerimenti" *ngIf="suggerimenti.length > 0">
+          <div class="suggerimento" *ngFor="let s of suggerimenti" (click)="selezionaSuggerimento(s)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+            {{ s.shortName }}
+          </div>
+        </div>
+      </div>
+
+      <p *ngIf="cercaErrore" class="error-msg">{{ cercaErrore }}</p>
+    </div>
+  </div>
+
+  <ng-container *ngIf="!mostraFormIndirizzo">
+
+    <div class="list-header">
+      <div class="list-header__address" (click)="modificaIndirizzo()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="2.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        <span class="list-header__addr-text">{{ indirizzo }}</span>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      </div>
+    </div>
+
+    <div class="categorie">
+      <button *ngFor="let c of categorie" class="categorie__btn"
+        [class.categorie__btn--active]="categoriaAttiva === c.value"
+        (click)="selezionaCategoria(c.value)">{{ c.label }}</button>
+    </div>
+
+    <div *ngIf="loading" class="state-msg">
+      <div class="spinner-lg"></div>
+      <p>Cerco ristoranti vicini…</p>
+    </div>
+    <div *ngIf="errore" class="state-msg state-msg--error"><p>{{ errore }}</p></div>
+    <div *ngIf="!loading && !errore && filtrati.length === 0" class="state-msg">
+      <div class="state-msg__icon">🍽️</div>
+      <p>Nessun ristorante trovato nella tua zona.</p>
+    </div>
+
+    <div class="rist-list" *ngIf="!loading && filtrati.length > 0">
+      <div class="rist-card" *ngFor="let r of filtrati" (click)="apriRistorante(r.id)">
+        <div class="rist-card__img-wrap" *ngIf="r.foto_profilo">
+          <img [src]="r.foto_profilo" [alt]="r.nome" class="rist-card__img" loading="lazy"
+            (error)="$event.target.style.display='none'"/>
+          <span *ngIf="r.categoria" class="rist-card__cat">{{ r.categoria }}</span>
+        </div>
+        <div class="rist-card__placeholder" *ngIf="!r.foto_profilo">
+          <span class="rist-card__placeholder-icon">🍽️</span>
+          <span *ngIf="r.categoria" class="rist-card__cat">{{ r.categoria }}</span>
+        </div>
+        <div class="rist-card__body">
+          <div class="rist-card__top">
+            <h3 class="rist-card__nome">{{ r.nome }}</h3>
+            <span class="rist-card__dist" *ngIf="r.distanza_km">{{ r.distanza_km | number:"1.1-1" }} km</span>
+          </div>
+          <p class="rist-card__via" *ngIf="r.via">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+            {{ r.via }}
+          </p>
+          <div class="rist-card__arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </ng-container>
+</div>

@@ -1,0 +1,67 @@
+<div class="page-container--narrow">
+  <h1 class="wallet__title">Wallet</h1>
+
+  <div class="card wallet__saldo-card">
+    <p class="label">Saldo disponibile</p>
+    <p class="wallet__saldo">{{ saldo | currency:'EUR' }}</p>
+    <button class="btn-primary wallet__ricarica-btn" (click)="apriModal()">
+      Ricarica
+    </button>
+  </div>
+
+  <div class="page-state" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Caricamento...</p>
+  </div>
+
+  <div *ngIf="!loading && !errore">
+    <h2 class="wallet__section-title">Movimenti</h2>
+
+    <div *ngIf="transazioni.length === 0" class="page-state">
+      <p>Nessun movimento ancora.</p>
+    </div>
+
+    <div class="wallet__list" *ngIf="transazioni.length > 0">
+      <div class="card wallet__tx" *ngFor="let t of transazioni">
+        <div class="wallet__tx-info">
+          <p class="wallet__tx-tipo">{{ getTipoLabel(t.tipo) }}</p>
+          <p class="text-muted" style="margin-top:2px">
+            {{ t.created_at | date:'dd/MM/yyyy HH:mm' }}
+          </p>
+        </div>
+        <span class="wallet__tx-importo"
+          [class.wallet__tx-importo--plus]="isEntrata(t.tipo)"
+          [class.wallet__tx-importo--minus]="!isEntrata(t.tipo)">
+          {{ isEntrata(t.tipo) ? '+' : '-' }}{{ t.importo | currency:'EUR' }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal ricarica -->
+<div class="modal-backdrop" *ngIf="modalOpen" (click)="chiudiModal()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <h3 class="modal__title">Ricarica Wallet</h3>
+
+    <label class="label" for="importo">Importo (€)</label>
+    <input id="importo" class="input-field" type="number"
+      [(ngModel)]="importo" min="1" max="500" />
+
+    <div class="modal__preset">
+      <button class="modal__preset-btn" *ngFor="let v of [5,10,20,50]"
+        (click)="importo = v">{{ v }}€</button>
+    </div>
+
+    <div class="errore-banner" *ngIf="ricaricaErrore">{{ ricaricaErrore }}</div>
+    <p class="wallet__successo" *ngIf="ricaricaSuccesso">{{ ricaricaSuccesso }}</p>
+
+    <div class="modal__footer">
+      <button class="btn-secondary" (click)="chiudiModal()">Annulla</button>
+      <button class="btn-primary" (click)="confermaRicarica()" [disabled]="ricaricaLoading">
+        <span *ngIf="!ricaricaLoading">Ricarica {{ importo }}€</span>
+        <span *ngIf="ricaricaLoading" class="spinner" style="width:16px;height:16px;border-width:2px;margin:0"></span>
+      </button>
+    </div>
+  </div>
+</div>

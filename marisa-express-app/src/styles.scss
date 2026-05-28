@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: #F9F9F9;
+  color: #1a1a1a;
+}
+
+/* Bottoni */
+.btn-primary {
+  padding: 12px 24px;
+  border-radius: 12px;
+  background: #FF6B35;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s;
+  &:hover  { background: #E5521C; }
+  &:active { transform: scale(0.97); }
+  &:disabled { opacity: 0.6; cursor: not-allowed; }
+}
+
+.btn-secondary {
+  padding: 12px 24px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.15s;
+  &:hover { background: #f9fafb; }
+}
+
+.btn-outline {
+  padding: 12px 24px;
+  border-radius: 12px;
+  border: 1.5px solid #FF6B35;
+  background: transparent;
+  color: #FF6B35;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  &:hover { background: #FF6B35; color: #fff; }
+}
+
+.btn-danger {
+  padding: 12px 24px;
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #dc2626;
+  cursor: pointer;
+  &:hover { background: #fef2f2; }
+}
+
+/* Card */
+.card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  border: 1px solid #f3f4f6;
+  padding: 24px;
+}
+
+/* Form */
+.input-field {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  font-size: 0.875rem;
+  font-family: 'Inter', sans-serif;
+  color: #111827;
+  background: white;
+  transition: all 0.15s;
+  outline: none;
+  &::placeholder { color: #9ca3af; }
+  &:focus { border-color: #FF6B35; box-shadow: 0 0 0 3px rgba(255,107,53,0.15); }
+}
+
+.label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #6b7280;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Badge stato ordine */
+.badge-attesa     { padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; background: #fff7ed; color: #ea580c; }
+.badge-accettato  { padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; background: #f0fdf4; color: #16a34a; }
+.badge-consegna   { padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; background: #eff6ff; color: #2563eb; }
+.badge-consegnato { padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; background: #f0fdf4; color: #16a34a; }
+.badge-rifiutato  { padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; background: #fef2f2; color: #dc2626; }
+
+/* Utility */
+.text-muted      { color: #6b7280; font-size: 0.875rem; }
+.text-error      { color: #dc2626; font-size: 0.875rem; }
+.mt-1 { margin-top: 4px; }
+.mt-2 { margin-top: 8px; }
+.mt-4 { margin-top: 16px; }
+.mt-6 { margin-top: 24px; }
+.flex            { display: flex; }
+.items-center    { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-2           { gap: 8px; }
+
+/* Layout principale */
+main {
+  margin-top: 64px;
+}
+
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+.page-container--narrow {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+/* Spinner */
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #f3f4f6;
+  border-top-color: #FF6B35;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 12px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Stato pagina (loading/errore/vuoto) */
+.page-state {
+  text-align: center;
+  padding: 80px 16px;
+  color: #6b7280;
+
+  p { font-size: 0.95rem; margin-top: 8px; }
+
+  &--error { color: #dc2626; }
+}
+
+/* Banner errore */
+.errore-banner {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  font-size: 0.875rem;
+}
+
+/* Divisore */
+.divider {
+  border: none;
+  border-top: 1px solid #f3f4f6;
+  margin: 20px 0;
+}

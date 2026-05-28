@@ -1,0 +1,83 @@
+<div class="page-header">
+  <div>
+    <h1>Impostazioni</h1>
+    <p class="text-muted">Gestisci il profilo del tuo ristorante</p>
+  </div>
+</div>
+
+<div class="loading-state" *ngIf="loading">
+  <div class="spinner"></div>
+</div>
+
+<div class="setting-layout" *ngIf="!loading">
+
+  <!-- Foto profilo -->
+  <div class="card foto-card">
+    <h2>Foto profilo</h2>
+    <div class="foto-preview">
+      <img *ngIf="fotoPreview" [src]="fotoPreview" alt="Foto ristorante" />
+      <div class="foto-placeholder" *ngIf="!fotoPreview">🍽️</div>
+    </div>
+    <label class="btn-secondary upload-btn">
+      📷 Cambia foto
+      <input type="file" accept="image/*" (change)="onFoto($event)" hidden />
+    </label>
+    <p class="text-muted" style="font-size:0.78rem; margin-top:8px;">PNG, JPG, WEBP · max 5MB</p>
+  </div>
+
+  <!-- Form dati -->
+  <div class="card form-card">
+    <h2>Dati ristorante</h2>
+
+    <div class="alert-success" *ngIf="successo">✓ Salvato con successo!</div>
+    <div class="text-error mt-2" *ngIf="errore">{{ errore }}</div>
+
+    <div class="form-group mt-4">
+      <label class="label">Nome ristorante</label>
+      <input class="input-field" [(ngModel)]="form.nome" placeholder="Nome del tuo ristorante" />
+    </div>
+
+    <div class="form-group">
+      <label class="label">Descrizione</label>
+      <textarea class="input-field" [(ngModel)]="form.descrizione"
+                placeholder="Descrivi il tuo ristorante..." rows="3"></textarea>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="label">Categoria</label>
+        <select class="input-field" [(ngModel)]="form.categoria">
+          <option value="">-- Seleziona categoria --</option>
+          <option value="Burger">🍔 Burger</option>
+          <option value="Pizza">🍕 Pizza</option>
+          <option value="Piadina">🥙 Piadina</option>
+          <option value="Sushi">🍣 Sushi</option>
+          <option value="Insalate">🥗 Insalate</option>
+          <option value="Pasta">🍝 Pasta</option>
+          <option value="Messicano">🌮 Messicano</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="label">Telefono</label>
+        <input class="input-field" [(ngModel)]="form.telefono" placeholder="02 1234567" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="label">Indirizzo</label>
+      <input class="input-field" [(ngModel)]="form.via" placeholder="Via Roma 1, Milano" />
+    </div>
+
+    <div class="form-group">
+      <label class="label">Partita IVA</label>
+      <input class="input-field" [(ngModel)]="form.partita_iva" placeholder="12345678901" />
+    </div>
+
+    <div class="form-footer">
+      <button class="btn-primary" (click)="salva()" [disabled]="salvataggio">
+        {{ salvataggio ? 'Salvataggio...' : 'Salva modifiche' }}
+      </button>
+    </div>
+  </div>
+
+</div>

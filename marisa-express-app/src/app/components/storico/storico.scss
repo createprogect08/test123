@@ -1,0 +1,73 @@
+.storico {
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 1.5rem;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__card { padding: 1.25rem; }
+
+  &__card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.875rem;
+  }
+
+  &__ristorante {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+
+  &__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.875rem;
+  }
+
+  &__item {
+    background: #f9fafb;
+    border: 1px solid #f3f4f6;
+    border-radius: 20px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+    color: #374151;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f3f4f6;
+    padding-top: 0.875rem;
+  }
+
+  &__totale {
+    font-size: 1.1rem;
+    color: #1a1a1a;
+  }
+
+  &__btn {
+    padding: 8px 16px;
+    font-size: 0.82rem;
+  }
+}
+
+.storico__card--attivo {
+  border: 2px solid #FF6B35;
+  &:hover { box-shadow: 0 4px 16px rgba(255,107,53,.15); }
+}
+.storico__actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.storico__live-badge {
+  font-size: 0.72rem; font-weight: 600; color: #FF6B35;
+  background: #fff7ed; padding: 3px 8px; border-radius: 999px;
+}

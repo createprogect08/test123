@@ -1,0 +1,255 @@
+.tracking {
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 1.5rem;
+  }
+
+  &__card { margin-bottom: 1rem; }
+
+  &__map-card { padding: 1.25rem; }
+
+  &__map {
+    height: 260px;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 8px;
+    background: #f3f4f6;
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 4px;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    color: #374151;
+  }
+
+  &__totale {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f3f4f6;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    font-size: 0.95rem;
+    color: #1a1a1a;
+    strong { font-size: 1.1rem; color: #FF6B35; }
+  }
+
+  &__assistenza {
+    display: block;
+    text-align: center;
+    color: #6b7280;
+    font-size: 0.82rem;
+    margin-top: 1rem;
+    text-decoration: underline;
+    &:hover { color: #FF6B35; }
+  }
+}
+
+/* Tracker verticale */
+.tracker {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+
+  &__step {
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 1rem;
+    align-items: start;
+    position: relative;
+  }
+
+  &__dot {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #f3f4f6;
+    border: 2px solid #e5e7eb;
+    color: #9ca3af;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-row: 1;
+    grid-column: 1;
+    z-index: 1;
+    transition: all 0.3s;
+  }
+
+  &__step--done &__dot {
+    background: #16a34a;
+    border-color: #16a34a;
+    color: #fff;
+  }
+
+  &__step--active &__dot {
+    background: #FF6B35;
+    border-color: #FF6B35;
+    color: #fff;
+    box-shadow: 0 0 0 4px rgba(255,107,53,0.2);
+  }
+
+  &__line {
+    grid-row: 2;
+    grid-column: 1;
+    width: 2px;
+    height: 32px;
+    background: #e5e7eb;
+    margin: 4px auto;
+  }
+
+  &__step--done &__line { background: #16a34a; }
+
+  &__label {
+    grid-row: 1;
+    grid-column: 2;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #6b7280;
+    padding-top: 8px;
+  }
+
+  &__step--active &__label { color: #1a1a1a; font-weight: 700; }
+  &__step--done  &__label { color: #16a34a; }
+}
+
+/* Rider marker sulla mappa */
+:host ::ng-deep .rider-icon {
+  font-size: 28px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.tracking {
+  &__annullato {
+    text-align: center;
+    padding: 2rem;
+    color: #dc2626;
+    font-weight: 600;
+    &-icon { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+  }
+
+  &__annulla-box {
+    border: 1.5px solid #fee2e2;
+    background: #fff5f5;
+  }
+
+  &__annulla-info {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 0.75rem;
+  }
+
+  &__conferma {
+    p { font-size: 0.95rem; margin-bottom: 1rem; color: #374151; }
+  }
+
+  &__conferma-btns {
+    display: flex;
+    gap: 0.75rem;
+    button { flex: 1; }
+  }
+}
+
+.btn-danger {
+  background: #dc2626;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: background 0.15s;
+  width: 100%;
+  &:hover:not(:disabled) { background: #b91c1c; }
+  &:disabled { opacity: 0.6; cursor: not-allowed; }
+}
+
+/* ── Header con back ── */
+.tracking__header {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+}
+.btn-back {
+  background: none; border: none; cursor: pointer; color: #6b7280;
+  padding: 6px; border-radius: 8px; display: flex; align-items: center;
+  &:hover { background: #f3f4f6; color: #111; }
+}
+
+/* ── Timer card ── */
+.tracking__timer-card {
+  display: flex; align-items: center; gap: 14px; padding: 16px 20px;
+  background: linear-gradient(135deg, #fff7ed, #fff);
+  border-left: 4px solid #FF6B35;
+  &--done { border-left-color: #22c55e; background: linear-gradient(135deg, #f0fdf4, #fff); }
+}
+.tracking__timer-icon { font-size: 2rem; }
+.tracking__timer-label { font-size: 0.78rem; color: #9ca3af; margin: 0; }
+.tracking__timer-value { font-size: 1.4rem; font-weight: 700; color: #111; margin: 2px 0 0; }
+
+/* ── Progress bar ── */
+.progress-bar-wrap {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+}
+.progress-bar {
+  flex: 1; height: 8px; background: #f3f4f6; border-radius: 999px; overflow: hidden;
+  &__fill {
+    height: 100%; background: linear-gradient(90deg, #FF6B35, #f59e0b);
+    border-radius: 999px; transition: width 0.6s ease;
+  }
+}
+.progress-bar__pct { font-size: 0.75rem; font-weight: 600; color: #FF6B35; min-width: 34px; text-align: right; }
+
+/* ── Tracker verticale ── */
+.tracker { display: flex; flex-direction: column; gap: 0; }
+.tracker__step {
+  display: flex; gap: 14px; align-items: flex-start;
+  &--done .tracker__dot { background: #22c55e; color: #fff; border-color: #22c55e; }
+  &--active .tracker__dot { background: #FF6B35; color: #fff; border-color: #FF6B35; box-shadow: 0 0 0 4px rgba(255,107,53,.15); }
+}
+.tracker__left { display: flex; flex-direction: column; align-items: center; }
+.tracker__dot {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 2px solid #e5e7eb; background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; font-weight: 700; flex-shrink: 0; z-index: 1;
+}
+.tracker__line { width: 2px; flex: 1; min-height: 24px; background: #e5e7eb; margin: 2px 0; }
+.tracker__info { padding: 6px 0 18px; }
+.tracker__label { margin: 0; font-weight: 600; font-size: 0.95rem; color: #111; }
+.tracker__desc { margin: 4px 0 0; font-size: 0.8rem; color: #6b7280; }
+
+/* ── Token box ── */
+.tracking__token-box { border: 2px dashed #FF6B35; }
+.tracking__token-title { font-weight: 700; font-size: 1rem; margin: 0 0 6px; }
+
+.tracking__token-display {
+  font-size: 2.8rem;
+  font-weight: 800;
+  font-family: monospace;
+  letter-spacing: 10px;
+  color: #FF6B35;
+  text-align: center;
+  background: #fff7ed;
+  border-radius: 12px;
+  padding: 20px 16px;
+  margin: 16px 0 8px;
+}
+.tracking__token-hint {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  text-align: center;
+  margin: 0;
+}
